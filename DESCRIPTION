@@ -1,0 +1,23 @@
+Package: NewBoRn
+Type: Package
+Title: Newbron needs surveyor
+Version: 0.1.0.9000
+Author: Authors@R: c(
+  person("Jean-Christophe", "Orain", "jean.christophe.orain@gmail.com",role = c('aut', 'cre'))
+  )
+Maintainer: Jean-Christophe Orain <jean.christophe.orain@gmail.com>
+Description: Interactive web application to survey newborn feeding, physical parameters ....
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Imports:
+  shiny,
+  DT,
+  dplyr,
+  tidyr,
+  lubridate,
+  tidyselect,
+  plotly
+Suggests: 
+    testthat
+RoxygenNote: 7.1.1
