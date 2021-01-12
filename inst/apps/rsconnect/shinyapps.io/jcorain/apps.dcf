@@ -1,0 +1,10 @@
+name: apps
+title:
+username:
+account: jcorain
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3465186
+bundleId: 4086596
+url: https://jcorain.shinyapps.io/apps/
+when: 1610462937.29521
