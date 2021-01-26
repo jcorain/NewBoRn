@@ -1,6 +1,6 @@
 newborn_server <- function(input, output, session) {
 
-  #--------------Varaible binding---------------
+  #--------------Variable binding---------------
 
   X <- NULL
 

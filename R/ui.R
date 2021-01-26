@@ -10,7 +10,8 @@ newborn_ui <- shiny::fluidPage(
 
                   shiny::actionButton(
                     inputId = "bug_report",
-                    label = "Report a bug/comment."
+                    label = "Report a bug/comment.",
+                    onclick = "window.open('https://github.com/jcorain/NewBoRn', '_blank_')"
                   ),
 
                   # create new data
