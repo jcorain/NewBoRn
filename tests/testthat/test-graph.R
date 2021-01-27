@@ -94,4 +94,6 @@ test_that("Wrong inputs are raising errors",
             expect_error(dejection_graph(dataframe = dummy_data_NA_date_hour))
             dummy_data_NA_dejection <- dplyr::mutate(.data = dummy_data, Vomit = NA, Urin = NA, Poop = NA)
             expect_error(dejection_graph(dataframe = dummy_data_NA_dejection))
+            expect_error(dejection_graph(dataframe = dummy_data, dejection_type = NULL))
+            expect_error(dejection_graph(dataframe = dummy_data, dejection_type = "test"))
           })

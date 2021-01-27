@@ -51,6 +51,7 @@ weight_graph <- function(dataframe = NULL){
 #'
 #' @param dataframe The dataframe containing the data you want to use
 #' @param granularity The granularity you want to use. For the moment it is hour or day.
+#' @param dejection_type Dejection type. Choose between "Urin", "Poop" and "Vomit". Defaut is all of them.
 #'
 #' @return graphic plotly object
 #'
@@ -59,11 +60,11 @@ weight_graph <- function(dataframe = NULL){
 #' "dummy_data.csv"))
 #' dummy_data <- dplyr::select(.data = dummy_data, -X)
 #' dejection_graph(dataframe = dummy_data)
-#' dejection_graph(dataframe = dummy_data, granularity = "Day")
+#' dejection_graph(dataframe = dummy_data, granularity = "Day", dejection_type = "Urin")
 #'
 #' @export
 
-dejection_graph <- function(dataframe = NULL, granularity = "Hour"){
+dejection_graph <- function(dataframe = NULL, granularity = "Hour", dejection_type = c("Urin", "Poop", "Vomit")){
 
   #--------------global variables binding---------------
 
@@ -80,6 +81,11 @@ dejection_graph <- function(dataframe = NULL, granularity = "Hour"){
 
   if(all(is.na(dataframe$Vomit)) && all(is.na(dataframe$Urin)) && all(is.na(dataframe$Poop))) stop("There is no dejection in the data frame.")
   if(all(is.na(dataframe$Date)) && all(is.na(dataframe$Hour))) stop("There is no date or time in the data frame.")
+
+  if(is.null(dejection_type)) stop("No dejection type. Do not know how to proceed")
+  for (dej in dejection_type){
+    if(!dej %in% c("Poop","Vomit","Urin")) stop(paste0("The dejection type, ", dej, ", is not in the list Poop, Vomit and Urin"))
+  }
 
   stopifnot(granularity %in% c("Hour","Day"))
 
@@ -108,9 +114,19 @@ dejection_graph <- function(dataframe = NULL, granularity = "Hour"){
   #--------------graph plotting-------------------
 
   gr <- plotly::plot_ly()
+
+  if("Urin" %in% dejection_type){
   gr <- plotly::add_trace(gr, x = df$Time, y = df$Urin, type = "scatter", mode = "lines+markers", name = "Urin")
+  }
+
+  if("Poop" %in% dejection_type){
   gr <- plotly::add_trace(gr, x = df$Time, y = df$Poop, type = "scatter", mode = "lines+markers", name = "Poop")
+  }
+
+  if("Vomit" %in% dejection_type){
   gr <- plotly::add_trace(gr, x = df$Time, y = df$Vomit, type = "scatter", mode = "lines+markers", name = "Vomit")
+  }
+
   gr <- plotly::layout(gr, xaxis = list(title = "Time"), yaxis = list(title = "Dejection (unit)"))
   return(gr)
 

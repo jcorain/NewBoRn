@@ -1,7 +1,7 @@
 Package: NewBoRn
 Type: Package
 Title: Newbron needs surveyor
-Version: 0.1.0.9000
+Version: 0.1.0.9001
 Author: Authors@R: c(
   person("Jean-Christophe", "Orain", "jean.christophe.orain@gmail.com",role = c('aut', 'cre'))
   )

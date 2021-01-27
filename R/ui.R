@@ -4,60 +4,57 @@ newborn_ui <- shiny::fluidPage(
 
     # data selection panel
 
-    shiny::column(2,
 
-                  # bug report button
+    # bug report button
 
-                  shiny::actionButton(
-                    inputId = "bug_report",
-                    label = "Report a bug/comment.",
-                    onclick = "window.open('https://github.com/jcorain/NewBoRn', '_blank_')"
-                  ),
-
-                  # create new data
-
-                  shiny::h4("Create new data"),
-
-                  shiny::textInput(inputId = "firstname",
-                                   label = "First Name"),
-
-                  shiny::textInput(inputId = "surname",
-                                   label = "Surname"),
-
-                  shiny::actionButton(inputId = "new_data",
-                                      label = "Create new file"),
-
-                  # load existing data
-
-                  shiny::h4("Load existing data"),
-
-                  shiny::fileInput(inputId = "data_load",
-                                   label = "",
-                                   multiple = FALSE,
-                                   accept = "csv"
-                  ),
-
-                  # Save the data
-
-                  shiny::h4("Save the data"),
-
-                  shiny::downloadButton(outputId = "save_data",
-                                        label = "Save the data"),
-
-                  # print for test purpose
-
-                  shiny::verbatimTextOutput(outputId = "test")
-
+    shiny::actionButton(
+      inputId = "bug_report",
+      label = "Report a bug/comment.",
+      onclick = "window.open('https://github.com/jcorain/NewBoRn', '_blank_')"
     ),
 
-    shiny::column(10,
+    shiny::tabsetPanel(
+      id = "Tab",
+      selected = "Data",
 
-                  shiny::tabsetPanel(
-                    id = "Tab",
-                    selected = "Data",
+      shiny::tabPanel(
+        title = "Data",
 
-                    shiny::tabPanel(
-                      title = "Data",
+        shiny::column(2,
+
+                      # create new data
+
+                      shiny::h4("Create new data"),
+
+                      shiny::textInput(inputId = "firstname",
+                                       label = "First Name"),
+
+                      shiny::textInput(inputId = "surname",
+                                       label = "Surname"),
+
+                      shiny::actionButton(inputId = "new_data",
+                                          label = "Create new file"),
+
+                      # load existing data
+
+                      shiny::h4("Load existing data"),
+
+                      shiny::fileInput(inputId = "data_load",
+                                       label = "",
+                                       multiple = FALSE,
+                                       accept = "csv"
+                      ),
+
+                      # Save the data
+
+                      shiny::h4("Save the data"),
+
+                      shiny::downloadButton(outputId = "save_data",
+                                            label = "Save the data")
+
+        ), # end of data loading column
+
+        shiny::column(10,
 
                       shiny::h4("Already loaded data"),
 
@@ -72,13 +69,13 @@ newborn_ui <- shiny::fluidPage(
                                     shiny::dateInput(inputId = "Date",
                                                      label = "Date",
                                                      format = "dd-mm-yyyy")
-                      ),
+                      ), # end of datetime column
 
                       shiny::column(6,
                                     shiny::textInput(inputId = "Hour",
                                                      label = "Hour (format = HH:MM)",
                                                      value = substr(Sys.time(),12,16))
-                      ),
+                      ), #end of hour column
 
                       shiny::h5("Physics charcateristics"),
 
@@ -168,44 +165,116 @@ newborn_ui <- shiny::fluidPage(
 
                       shiny::actionButton(inputId = "del_row",
                                           label = "Delete the row")
-                    ),
+        ) #end of add data column
+      ), # end of data tab
 
-                    shiny::tabPanel(
-                      title = "Graph",
+      shiny::tabPanel(
+        title = "Graph",
+
+        shiny::column(2,
+
+                      shiny::h3("Graph inputs"),
 
                       shiny::selectInput(inputId = "granularity",
                                          label = "Time granularity",
                                          choices = c("Hour","Day"),
                                          selected = "Day"),
 
+                      shiny::h4("Graph selection"),
+
+                      shiny::h5("Physical Parameters"),
+
+                      shiny::column(6,
+
+                                    shiny::checkboxInput(inputId = "temperature_bool",
+                                                         label = "Temperature",
+                                                         value = TRUE
+                                    )
+                      ),
+
+                      shiny::column(6,
+
+                                    shiny::checkboxInput(inputId = "weight_bool",
+                                                         label = "Weight",
+                                                         value = TRUE
+                                    )
+                      ),
+
+                      shiny::h5("Feeding"),
+
+                      shiny::column(6,
+                                    shiny::checkboxInput(inputId = "lactation_bool",
+                                                         label = "Lactation",
+                                                         value = TRUE
+                                    )
+                      ),
+
+                      shiny::column(6,
+                                    shiny::checkboxInput(inputId = "milk_feeding_bool",
+                                                         label = "Milk Feeding",
+                                                         value = TRUE
+                                    )
+                      ),
+
+                      shiny::h5("Dejection"),
+
+                      shiny::column(4,
+
+                                    shiny::checkboxInput(inputId = "urin_bool",
+                                                         label = "Urin",
+                                                         value = TRUE
+                                    )
+                      ),
+
+                      shiny::column(4,
+                                    shiny::checkboxInput(inputId = "poop_bool",
+                                                         label = "Poop",
+                                                         value = TRUE
+                                    )
+                      ),
+
+                      shiny::column(4,
+                                    shiny::checkboxInput(inputId = "vomit_bool",
+                                                         label = "Vomit",
+                                                         value = TRUE
+                                    )
+                      ) ,
+
+                      shiny::verbatimTextOutput(outputId = "test")
+
+
+        ), #end of graph inputs
+
+        shiny::column(10,
+
                       shiny::column(
                         4,
                         shiny::h3("Physical parameters"),
 
-                        plotly::plotlyOutput(outputId = "temperature"),
+                        shiny::uiOutput(outputId = "temperature_graph"),
 
-                        plotly::plotlyOutput(outputId = "weight")
+                        shiny::uiOutput(outputId = "weight_graph")
+
                       ),
 
                       shiny::column(
                         4,
                         shiny::h3("Feeding"),
 
-                        plotly::plotlyOutput(outputId = "lactation"),
+                        shiny::uiOutput(outputId = "lactation_graph"),
 
-                        plotly::plotlyOutput(outputId = "milk_feeding")
+                        shiny::uiOutput(outputId = "milk_feeding_graph")
+
                       ),
 
                       shiny::column(
                         4,
                         shiny::h3("Dejection"),
-                        plotly::plotlyOutput(outputId = "dejection")
+
+                        shiny::uiOutput(outputId = "dejection_graph")
                       )
-
-                    )
-
-                  )
-    )
-
-  )
+        )# end of graph display pannel
+      ) #end of graph tab
+    ) #end of tabpannel
+  ) #end of fluidpage
 )

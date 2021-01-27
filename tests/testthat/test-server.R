@@ -26,6 +26,7 @@ test_that("The server.R responds well to reactivity", {
                       expect_equal(data_first(), new_data())
                       expect_equal(data$curval, data_first())
                       expect_equal(data$lstval, data_first())
+
                       session$setInputs(Date = as.Date("01-01-2020", format = "%d-%m-%Y"))
                       session$setInputs(Hour = "12:00")
                       session$setInputs(Weight = 3500)
@@ -38,6 +39,7 @@ test_that("The server.R responds well to reactivity", {
                       session$setInputs(Vomit = 0)
                       session$setInputs(Poop = 1)
                       session$setInputs(Add_row = 1)
+
                       expect_equal(data$lstval, data_first())
                       expect_equal(nrow(data$curval),1)
                       expect_equal(data$curval$Date,"01-01-2020")
@@ -69,5 +71,50 @@ test_that("The server.R responds well to reactivity", {
                       expect_equal(data$fantom$Poop, 1)
 
                       expect_equal(data$curval, data_first())
+
+                      session$setInputs(Date = as.Date("01-01-2020", format = "%d-%m-%Y"))
+                      session$setInputs(Hour = "12:00")
+                      session$setInputs(Weight = 3500)
+                      session$setInputs(Temperature = 37)
+                      session$setInputs(Lactation_Right = 0)
+                      session$setInputs(Lactation_Left = 1)
+                      session$setInputs(Mother_Milk = 0)
+                      session$setInputs(Powder_Milk = 30)
+                      session$setInputs(Urin = 2)
+                      session$setInputs(Vomit = 1)
+                      session$setInputs(Poop = 1)
+                      session$setInputs(Add_row = 2)
+
+                      session$setInputs(temperature_bool = TRUE)
+                      expect_equal(class(output$temperature_graph), "list")
+                      session$setInputs(temperature_bool = FALSE)
+                      expect_equal(output$temperature_graph, NULL)
+
+                      session$setInputs(weight_bool = TRUE)
+                      expect_equal(class(output$weight_graph), "list")
+                      session$setInputs(weight_bool = FALSE)
+                      expect_equal(output$weight_graph, NULL)
+
+                      session$setInputs(lactation_bool = TRUE)
+                      expect_equal(class(output$lactation_graph), "list")
+                      session$setInputs(lactation_bool = FALSE)
+                      expect_equal(output$lactation_graph, NULL)
+
+                      session$setInputs(milk_feeding_bool = TRUE)
+                      expect_equal(class(output$milk_feeding_graph), "list")
+                      session$setInputs(milk_feeding_bool = FALSE)
+                      expect_equal(output$milk_feeding_graph, NULL)
+
+                      session$setInputs(urin_bool = TRUE)
+                      expect_equal(class(output$dejection_graph), "list")
+                      session$setInputs(urin_bool = FALSE)
+                      session$setInputs(poop_bool = TRUE)
+                      expect_equal(class(output$dejection_graph), "list")
+                      session$setInputs(poop_bool = FALSE)
+                      session$setInputs(vomit_bool = TRUE)
+                      expect_equal(class(output$dejection_graph), "list")
+                      session$setInputs(vomit_bool = FALSE)
+                      expect_equal(output$dejection_graph, NULL)
+
                       })
 })

@@ -4,12 +4,18 @@
 \alias{dejection_graph}
 \title{dejection_graph}
 \usage{
-dejection_graph(dataframe = NULL, granularity = "Hour")
+dejection_graph(
+  dataframe = NULL,
+  granularity = "Hour",
+  dejection_type = c("Urin", "Poop", "Vomit")
+)
 }
 \arguments{
 \item{dataframe}{The dataframe containing the data you want to use}
 
 \item{granularity}{The granularity you want to use. For the moment it is hour or day.}
+
+\item{dejection_type}{Dejection type. Choose between "Urin", "Poop" and "Vomit". Defaut is all of them.}
 }
 \value{
 graphic plotly object
@@ -22,6 +28,6 @@ dummy_data <- utils::read.csv(file.path(system.file("extdata", package = "NewBoR
 "dummy_data.csv"))
 dummy_data <- dplyr::select(.data = dummy_data, -X)
 dejection_graph(dataframe = dummy_data)
-dejection_graph(dataframe = dummy_data, granularity = "Day")
+dejection_graph(dataframe = dummy_data, granularity = "Day", dejection_type = "Urin")
 
 }

@@ -125,21 +125,74 @@ newborn_server <- function(input, output, session) {
 
   #---------------plotting-----------------
 
-  output$temperature <- plotly::renderPlotly(temperature_graph(dataframe = shiny::req(data$curval)))
+  output$temperature_graph <- shiny::renderUI({
+    if(input$temperature_bool == TRUE){
+      plotly::plotlyOutput(outputId = "temperature")
+    } else{
+      NULL
+    }
+  })
+
+  output$temperature <-  plotly::renderPlotly(temperature_graph(dataframe = shiny::req(data$curval)))
+
+  output$weight_graph <- shiny::renderUI({
+    if(input$weight_bool == TRUE){
+      plotly::plotlyOutput(outputId = "weight")
+    } else{
+      NULL
+    }
+  })
 
   output$weight <- plotly::renderPlotly(weight_graph(dataframe = shiny::req(data$curval)))
+
+  output$lactation_graph <- shiny::renderUI({
+    if(input$lactation_bool == TRUE){
+      plotly::plotlyOutput(outputId = "lactation")
+    } else{
+      NULL
+    }
+  })
 
   output$lactation <- plotly::renderPlotly(lactation_graph(dataframe = shiny::req(data$curval),
                                                            granularity = shiny::req(input$granularity)))
 
+  output$milk_feeding_graph <- shiny::renderUI({
+    if(input$milk_feeding_bool == TRUE){
+      plotly::plotlyOutput(outputId = "milk_feeding")
+    } else{
+      NULL
+    }
+  })
+
   output$milk_feeding <- plotly::renderPlotly(milk_feeding_graph(dataframe = shiny::req(data$curval),
                                                                  granularity = shiny::req(input$granularity)))
 
+  output$dejection_graph <- shiny::renderUI({
+    if(input$urin_bool == TRUE || input$poop_bool == TRUE || input$vomit_bool == TRUE){
+      plotly::plotlyOutput(outputId = "dejection")
+    } else{
+      NULL
+    }
+  })
+
+  dejection_type <- shiny::reactiveValues()
+
+  shiny::observeEvent(list(input$urin_bool, input$poop_bool, input$vomit_bool),
+                      {
+                        dejection_type$Urin <- ifelse(input$urin_bool == TRUE, "Urin", NA)
+                        dejection_type$Poop <- ifelse(input$poop_bool == TRUE, "Poop", NA)
+                        dejection_type$Vomit <- ifelse(input$vomit_bool == TRUE, "Vomit", NA)
+                        dejection_type$full <- stats::na.omit(c(dejection_type$Urin,
+                                                         dejection_type$Poop,
+                                                         dejection_type$Vomit))
+                      })
+
   output$dejection <- plotly::renderPlotly(dejection_graph(dataframe = shiny::req(data$curval),
-                                                           granularity = shiny::req(input$granularity)))
+                                                           granularity = shiny::req(input$granularity),
+                                                           dejection_type = shiny::req(dejection_type$full)))
 
   #-------------- test------------------------
 
-  output$test <- shiny::renderPrint(input$del_row_sel)
+  output$test <- shiny::renderPrint(dejection_type$full)
 }
 
