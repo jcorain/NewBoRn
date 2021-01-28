@@ -149,6 +149,9 @@ save_data <- function(dataframe = NULL, filename = NULL, path = NULL){
   return(NULL)
 } #end of save_data
 
+
+#-----------------variable definition-------------------
+
 # shared vectors for column names
 
 col_empty_val <- list(Date = character(), Hour = character(), Weight = numeric(), Temperature = numeric(),  Mother_Milk = integer(), Powder_Milk = integer(),

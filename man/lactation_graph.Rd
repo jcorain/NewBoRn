@@ -4,12 +4,14 @@
 \alias{lactation_graph}
 \title{lactation_graph}
 \usage{
-lactation_graph(dataframe = NULL, granularity = "Hour")
+lactation_graph(dataframe = NULL, granularity = "Hour", birthdate = NULL)
 }
 \arguments{
 \item{dataframe}{The dataframe containing the data you want to use}
 
 \item{granularity}{The granularity you want to use. For the moment it is hour or day.}
+
+\item{birthdate}{The birthdate of the child. If NULL we assume that this is the first day of the dataframe. Defaut is NULL}
 }
 \value{
 graphic plotly object

@@ -4,12 +4,21 @@
 \alias{milk_feeding_graph}
 \title{milk_feeding_graph}
 \usage{
-milk_feeding_graph(dataframe = NULL, granularity = "Hour")
+milk_feeding_graph(
+  dataframe = NULL,
+  granularity = "Hour",
+  mean_plot = FALSE,
+  birthdate = NULL
+)
 }
 \arguments{
 \item{dataframe}{The dataframe containing the data you want to use}
 
 \item{granularity}{The granularity you want to use. For the moment it is hour or day.}
+
+\item{mean_plot}{Boolean to plot mean with granularity one step higher than the asked one.}
+
+\item{birthdate}{The birthdate of the child. If NULL we assume that this is the first day of the dataframe. Defaut is NULL}
 }
 \value{
 graphic plotly object

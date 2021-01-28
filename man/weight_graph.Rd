@@ -4,10 +4,12 @@
 \alias{weight_graph}
 \title{weight_graph}
 \usage{
-weight_graph(dataframe = NULL)
+weight_graph(dataframe = NULL, birthdate = NULL)
 }
 \arguments{
 \item{dataframe}{The dataframe contaning the dat you want to use}
+
+\item{birthdate}{The birthdate of the child. If NULL we assume that this is the first day of the dataframe. Defaut is NULL}
 }
 \value{
 graphic plotly object

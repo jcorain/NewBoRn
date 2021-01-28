@@ -4,10 +4,12 @@
 \alias{temperature_graph}
 \title{temperature_graph}
 \usage{
-temperature_graph(dataframe = NULL)
+temperature_graph(dataframe = NULL, birthdate = NULL)
 }
 \arguments{
 \item{dataframe}{The dataframe you want to analyze}
+
+\item{birthdate}{The birthdate of the child. If NULL we assume that this is the first day of the dataframe. Defaut is NULL}
 }
 \value{
 plotly graphic object

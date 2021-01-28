@@ -165,7 +165,8 @@ newborn_server <- function(input, output, session) {
   })
 
   output$milk_feeding <- plotly::renderPlotly(milk_feeding_graph(dataframe = shiny::req(data$curval),
-                                                                 granularity = shiny::req(input$granularity)))
+                                                                 granularity = shiny::req(input$granularity),
+                                                                 mean_plot = input$mean_plot))
 
   output$dejection_graph <- shiny::renderUI({
     if(input$urin_bool == TRUE || input$poop_bool == TRUE || input$vomit_bool == TRUE){
@@ -189,7 +190,8 @@ newborn_server <- function(input, output, session) {
 
   output$dejection <- plotly::renderPlotly(dejection_graph(dataframe = shiny::req(data$curval),
                                                            granularity = shiny::req(input$granularity),
-                                                           dejection_type = shiny::req(dejection_type$full)))
+                                                           dejection_type = shiny::req(dejection_type$full),
+                                                           mean_plot = input$mean_plot))
 
   #-------------- test------------------------
 

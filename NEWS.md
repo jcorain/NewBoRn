@@ -1,4 +1,5 @@
 # NewBoRn (development version)
+  * Add mean value display for milk_feeding and dejection graph
   * Change interactivity : add possibility to select whihc graph and dejection to display
   * Add travis yml file
   * Add link to github

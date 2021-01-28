@@ -7,7 +7,9 @@
 dejection_graph(
   dataframe = NULL,
   granularity = "Hour",
-  dejection_type = c("Urin", "Poop", "Vomit")
+  dejection_type = c("Urin", "Poop", "Vomit"),
+  mean_plot = FALSE,
+  birthdate = NULL
 )
 }
 \arguments{
@@ -16,6 +18,10 @@ dejection_graph(
 \item{granularity}{The granularity you want to use. For the moment it is hour or day.}
 
 \item{dejection_type}{Dejection type. Choose between "Urin", "Poop" and "Vomit". Defaut is all of them.}
+
+\item{mean_plot}{Boolean to plot mean with granularity one step higher than the asked one.}
+
+\item{birthdate}{The birthdate of the child. If NULL we assume that this is the first day of the dataframe. Defaut is NULL}
 }
 \value{
 graphic plotly object

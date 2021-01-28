@@ -177,8 +177,12 @@ newborn_ui <- shiny::fluidPage(
 
                       shiny::selectInput(inputId = "granularity",
                                          label = "Time granularity",
-                                         choices = c("Hour","Day"),
+                                         choices = granularity_val[-length(granularity_val)], #granularity_val are defined in graph.R
                                          selected = "Day"),
+
+                      shiny::checkboxInput(inputId = "mean_plot",
+                                           label = "Plot mean values",
+                                           value = TRUE),
 
                       shiny::h4("Graph selection"),
 
@@ -278,3 +282,4 @@ newborn_ui <- shiny::fluidPage(
     ) #end of tabpannel
   ) #end of fluidpage
 )
+

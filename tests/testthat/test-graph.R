@@ -64,6 +64,7 @@ test_that("Good inputs are giving the good outputs",
           {
             expect_equal(class(milk_feeding_graph(dataframe = dummy_data))[1], "plotly")
             expect_equal(class(milk_feeding_graph(dataframe = dummy_data, granularity = "Day"))[1], "plotly")
+            expect_equal(class(milk_feeding_graph(dataframe = dummy_data, granularity = "Day", mean_plot = TRUE))[1], "plotly")
           })
 
 test_that("Wrong inputs are raising errors",
@@ -83,6 +84,7 @@ test_that("Good inputs are giving the good outputs",
           {
             expect_equal(class(dejection_graph(dataframe = dummy_data))[1], "plotly")
             expect_equal(class(dejection_graph(dataframe = dummy_data, granularity = "Day"))[1], "plotly")
+            expect_equal(class(dejection_graph(dataframe = dummy_data, granularity = "Day", mean_plot = TRUE))[1], "plotly")
           })
 
 test_that("Wrong inputs are raising errors",
@@ -96,4 +98,20 @@ test_that("Wrong inputs are raising errors",
             expect_error(dejection_graph(dataframe = dummy_data_NA_dejection))
             expect_error(dejection_graph(dataframe = dummy_data, dejection_type = NULL))
             expect_error(dejection_graph(dataframe = dummy_data, dejection_type = "test"))
+          })
+
+context("Test mean_df function")
+
+test_that("Good inputs are giving the good outputs",
+          {
+            expect_equal(is.data.frame(mean_df(dataframe = dummy_data)), TRUE)
+          })
+
+test_that("Wrong inputs are raising errors",
+          {
+            expect_error(mean_df())
+            expect_error(mean_df(dataframe = data.frame()))
+            dummy_data_NA_date <- dplyr::mutate(.data = dummy_data, Date = NA)
+            expect_error(mean_df(dataframe = dummy_data_NA_date))
+            expect_error(mean_df(dataframe = dummy_data, granularity_mean = "test"))
           })
